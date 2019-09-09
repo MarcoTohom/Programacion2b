@@ -11,12 +11,15 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonPrimitive;
+import java.util.Iterator;
+import java.util.Map.Entry;
+import java.util.Set;
 
 public class lee_json {
 
     public static void main(String args[]) throws java.io.IOException {
         JsonParser jsonParser = new JsonParser();
-        FileReader fileReader = new FileReader("datos.json");
+        FileReader fileReader = new FileReader("ejemplo.json");
         JsonElement jsonElement = jsonParser.parse(fileReader);
         dumpJSONElement(jsonElement);
     }
@@ -25,10 +28,10 @@ public class lee_json {
         if (pJsonElement.isJsonObject()) {
             System.out.println("\nEs objeto");
             JsonObject jsonObject = pJsonElement.getAsJsonObject();
-            java.util.Set<java.util.Map.Entry<String, JsonElement>> entrySet = jsonObject.entrySet();
-            java.util.Iterator<java.util.Map.Entry<String, JsonElement>> iterator = entrySet.iterator();
+            Set<Entry<String, JsonElement>> entrySet = jsonObject.entrySet();
+            Iterator<java.util.Map.Entry<String, JsonElement>> iterator = entrySet.iterator();
             while (iterator.hasNext()) {
-                java.util.Map.Entry<String, JsonElement> entrada = iterator.next();
+                Entry<String, JsonElement> entrada = iterator.next();
                 System.out.println("\tClave: " + entrada.getKey());
                 System.out.println("\tValor:");
                 dumpJSONElement(entrada.getValue());
@@ -36,21 +39,21 @@ public class lee_json {
 
         } else if (pJsonElement.isJsonArray()) {
             JsonArray array = pJsonElement.getAsJsonArray();
-            System.out.println("Es array. Numero de elementos: " + array.size());
-            java.util.Iterator<JsonElement> iter = array.iterator();
+            //System.out.println("Es array. Numero de elementos: " + array.size());
+            Iterator<JsonElement> iter = array.iterator();
             while (iter.hasNext()) {
                 JsonElement entrada = iter.next();
                 dumpJSONElement(entrada);
             }
         } else if (pJsonElement.isJsonPrimitive()) {
-            System.out.println("Es primitiva");
+            //System.out.println("Es primitiva");
             JsonPrimitive valor = pJsonElement.getAsJsonPrimitive();
             if (valor.isBoolean()) {
-                System.out.println("Es booleano: " + valor.getAsBoolean());
+                System.out.print(/*"Es booleano: " + */valor.getAsBoolean());
             } else if (valor.isNumber()) {
-                System.out.println("Es numero: " + valor.getAsNumber());
+                System.out.print(/*"Es numero: " + */valor.getAsNumber());
             } else if (valor.isString()) {
-                System.out.println("Es texto: " + valor.getAsString());
+                System.out.print(/*"Es texto: " + */valor.getAsString());
             }
         } else if (pJsonElement.isJsonNull()) {
             System.out.println("Es NULL");
